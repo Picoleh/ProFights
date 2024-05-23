@@ -5,18 +5,19 @@
  */
 package profights;
 
+import java.util.*;
+
 /**
  *
  * @author Lepec
  */
-public class ProFights {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        MenuInicial.CriaMenu();
-    }
+public class Player {
+    public String nome;
+    public int vida;
+    List<Card> cards;
     
+    public Player(String nome){
+        this.nome = nome;
+        vida = 5000;
+    }
 }

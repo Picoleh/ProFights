@@ -13,7 +13,7 @@ import javax.swing.*;
  * @author Lepec
  */
 public class Interface{
-    public void CriaUI(){
+    public static void CriaUI(Player p1, Player p2){
         JFrame frame = new JFrame();
         
         // Parte Esquerda - Infos
@@ -21,19 +21,15 @@ public class Interface{
         JPanel info_p2 = new JPanel();
         JPanel turno = new JPanel();
         JPanel info_p1 = new JPanel();
-        JLabel nome_p1 = new JLabel("Ranan");
-        JLabel personagem_p1 = new JLabel("Lucas");
+        JLabel nome_p1 = new JLabel(p1.nome);
         JLabel vida_p1 = new JLabel("Vida: 5000");
-        JLabel nome_p2 = new JLabel("Felps");
-        JLabel personagem_p2 = new JLabel("Chico");
+        JLabel nome_p2 = new JLabel(p2.nome);
         JLabel vida_p2 = new JLabel("Vida: 5000");
         JButton btt_encerrarTurno = new JButton("Encerrar Turno");
         
         info_p1.add(nome_p1);
-        info_p1.add(personagem_p1);
         info_p1.add(vida_p1);
         info_p2.add(nome_p2);
-        info_p2.add(personagem_p2);
         info_p2.add(vida_p2);
         turno.add(btt_encerrarTurno);
         
@@ -56,6 +52,7 @@ public class Interface{
         frame.add(cartas_p2, BorderLayout.NORTH);
         
         frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(3);
     }
