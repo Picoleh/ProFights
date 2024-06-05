@@ -17,9 +17,9 @@ public class Interface{
         JFrame frame = new JFrame();
         
         // Parte Esquerda - Infos
-        JPanel infos = new JPanel(new GridLayout(3,1));
+        JPanel infos = new JPanel(new BorderLayout());
         JPanel info_p2 = new JPanel();
-        JPanel turno = new JPanel();
+        JPanel turno = new JPanel(new GridLayout(7, 1));
         JPanel info_p1 = new JPanel();
         JLabel nome_p1 = new JLabel(p1.nome);
         JLabel vida_p1 = new JLabel("Vida: 5000");
@@ -31,15 +31,24 @@ public class Interface{
         info_p1.add(vida_p1);
         info_p2.add(nome_p2);
         info_p2.add(vida_p2);
+        turno.add(new JLabel());
+        turno.add(new JLabel());
+        turno.add(new JLabel());
         turno.add(btt_encerrarTurno);
+        turno.setBackground(Color.YELLOW);
         
-        infos.add(info_p2);
-        infos.add(turno);
-        infos.add(info_p1);
+        infos.add(info_p2, BorderLayout.NORTH);
+        infos.add(turno, BorderLayout.CENTER);
+        infos.add(info_p1, BorderLayout.SOUTH);
         // ------------------------
-        JPanel centro = new JPanel();
-        JPanel cartas_p1 = new JPanel();
+        JPanel centro = new JPanel(new BorderLayout());
+        // Parte Centro - Cartas p1
+        JPanel cartas_p1 = new JPanel(new GridLayout(1, 5, 10, 0));
+        
         JPanel cartas_p2 = new JPanel();
+        
+        
+        
         
         infos.setBackground(Color.red);
         centro.setBackground(Color.green);
@@ -48,8 +57,6 @@ public class Interface{
         
         frame.add(infos, BorderLayout.WEST);
         frame.add(centro, BorderLayout.CENTER);
-        frame.add(cartas_p1, BorderLayout.SOUTH);
-        frame.add(cartas_p2, BorderLayout.NORTH);
         
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

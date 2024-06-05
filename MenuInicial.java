@@ -29,9 +29,9 @@ public class MenuInicial {
         
         bttPlay.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                String nomeP1, nomeP2;
-                nomeP1 = JOptionPane.showInputDialog(null, "Informe o nome Player 1: ", "", JOptionPane.INFORMATION_MESSAGE);
-                nomeP2 = JOptionPane.showInputDialog(null, "Informe o nome Player 2: ", "", JOptionPane.INFORMATION_MESSAGE);
+                String nomeP1 = "s", nomeP2 = "l";
+                //nomeP1 = JOptionPane.showInputDialog(null, "Informe o nome Player 1: ", "", JOptionPane.INFORMATION_MESSAGE);
+                //nomeP2 = JOptionPane.showInputDialog(null, "Informe o nome Player 2: ", "", JOptionPane.INFORMATION_MESSAGE);
                 
                 Player p1 = new Player(nomeP1);
                 Player p2 = new Player(nomeP2);

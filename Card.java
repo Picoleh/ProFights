@@ -22,5 +22,6 @@ public class Card extends JButton{
         this.ATK = ATK;
         this.DEF = DEF;
         this.imagem = imagem;
+        this.setVisible(true);
     }
 }
