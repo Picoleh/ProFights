@@ -7,6 +7,7 @@ package profights;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 /**
  *
@@ -43,16 +44,37 @@ public class Interface{
         // ------------------------
         JPanel centro = new JPanel(new BorderLayout());
         // Parte Centro - Cartas p1
-        JPanel cartas_p1 = new JPanel(new GridLayout(1, 5, 10, 0));
+        HandPanel hand_p1 = new HandPanel();
+        JScrollPane scroll_p1 = new JScrollPane(hand_p1);
+        scroll_p1.setBorder(null);
+        scroll_p1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll_p1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        hand_p1.setBackground(Color.GREEN);
+        //-------------------------
+        // Parte Centro - Cartas p2
+        JPanel cartas_p2 = new JPanel(new FlowLayout());
+        //-------------------------
+        // Parte Centro - Campo
+        JPanel campo = new JPanel(new GridLayout(2, 1, 5, 20));
+        // Parte Centro - Campo p1
+        FieldPanel campo_p1 = new FieldPanel();
+        FieldPanel campo_p2 = new FieldPanel();
+        //-------------------------
+        campo.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        campo.add(campo_p1);
+        campo.add(campo_p2);
+        campo.setBackground(Color.BLUE);
         
-        JPanel cartas_p2 = new JPanel();
+        
+        centro.add(scroll_p1, BorderLayout.SOUTH);
+        centro.add(cartas_p2, BorderLayout.NORTH);
+        centro.add(campo, BorderLayout.CENTER);
         
         
         
         
         infos.setBackground(Color.red);
         centro.setBackground(Color.green);
-        cartas_p1.setBackground(Color.blue);
         cartas_p2.setBackground(Color.orange);
         
         frame.add(infos, BorderLayout.WEST);

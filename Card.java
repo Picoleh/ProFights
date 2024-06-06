@@ -18,10 +18,17 @@ public class Card extends JButton{
     public Image imagem;
 
     public Card(String nome, int ATK, int DEF, Image imagem) {
+        super(nome);
         this.nome = nome;
         this.ATK = ATK;
         this.DEF = DEF;
         this.imagem = imagem;
+        this.setVisible(true);
+        this.setPreferredSize(new Dimension(50, 100));
+    }
+    
+    public Card(){
+        super("teste");
         this.setVisible(true);
     }
 }
