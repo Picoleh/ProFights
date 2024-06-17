@@ -47,6 +47,14 @@ public class HandPanel extends JPanel{
         }
     }
 
+    public Card getSelectedCard(){
+        for(HandCardButton c : listButton){
+            if(c.isSelected)
+                return c.getCard();
+        }
+        return null;
+    }
+
     public void addRandomCardToHand(){
         Random rd = new Random();
         NomeCarta nomeEnum = NomeCarta.values()[rd.nextInt(1,NomeCarta.values().length)];
@@ -66,5 +74,6 @@ public class HandPanel extends JPanel{
         }
         Card c = new Card(nomeEnum,Location.HAND,img);
         playerAssociado.cards.add(c);
+        update();
     }
 }

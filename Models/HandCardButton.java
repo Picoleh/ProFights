@@ -22,9 +22,9 @@ public class HandCardButton extends JButton{
     private HandPanel pai;
     public boolean isSelected;
 
-
     public HandCardButton(Card c, HandPanel pai) {
         this.pai = pai;
+        card = c;
         isSelected = false;
         this.setVisible(true);
         this.setIcon(new ImageIcon(Card.MudaTamanhoImagem(c.img,0.06)));
@@ -47,6 +47,10 @@ public class HandCardButton extends JButton{
                 Interface.infoCard.setBackCardImg();
             }
         });
+    }
+
+    public Card getCard(){
+        return card;
     }
 
     private void select(){
