@@ -8,8 +8,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import Models.Player;
-
-
+/**
+ *
+ * @author Lepec
+ */
 public class MenuInicial {
     public static void CriaMenu(){
         JFrame frame = new JFrame();
@@ -18,6 +20,9 @@ public class MenuInicial {
         JButton bttPlay = new JButton("Jogar");
         JButton bttHowToPlay = new JButton("Como Jogar");
         JButton bttExit = new JButton("Sair");
+
+        JLabel logoP = new JLabel(new ImageIcon("GUI\\UtilImages\\Logo.png"));
+        logoP.setSize(1000, 500);
         
         btts.add(bttPlay);
         btts.add(new JLabel());
@@ -46,8 +51,9 @@ public class MenuInicial {
         buttons.add(new JLabel());
         buttons.add(new JLabel());
         
+        frame.add(logoP, BorderLayout.NORTH);
         frame.add(buttons, BorderLayout.SOUTH);
-        
+
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
@@ -55,3 +61,4 @@ public class MenuInicial {
     }
     
 }
+
