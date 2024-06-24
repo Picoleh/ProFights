@@ -15,7 +15,7 @@ public class Player {
     public int vida;
     public ArrayList<Card> cards;
     public HandPanel hand = new HandPanel(this);
-    public FieldPanel field = new FieldPanel(this);
+    public FieldPanel field = new FieldPanel(this);;
     public DeckPanel deck = new DeckPanel(this);
     
     public Player(String nome){
@@ -28,5 +28,10 @@ public class Player {
     public void DrawCard(){
         hand.addRandomCardToHand();
         hand.update();
+    }
+
+    public void DrawNCards(int n){
+        while(n-- > 0)
+            DrawCard();
     }
 }

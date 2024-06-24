@@ -8,26 +8,15 @@ import java.awt.event.MouseEvent;
 
 public class DeckCardButton extends JButton {
     private int qtd;
+    public Player playerAssociated;
     public DeckCardButton(Player player){
-        qtd = 20;
+        playerAssociated = player;
+        qtd = 5;
         setBackCardImg();
         updateQtd();
         this.setHorizontalTextPosition(JButton.CENTER);
         this.setFont(new Font("Arial",Font.BOLD, 22));
         this.setForeground(Color.WHITE);
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(qtd > 0){
-                    player.DrawCard();
-                    qtd--;
-                    updateQtd();
-                }
-                else{
-                    //TODO exception no more Cards
-                }
-            }
-        });
     }
 
     private void updateQtd(){
@@ -41,5 +30,14 @@ public class DeckCardButton extends JButton {
         }catch(Exception ex){
             System.out.println(ex);
         }
+    }
+
+    public int getCardsLeft(){
+        return qtd;
+    }
+
+    public void removeOneCard(){
+        qtd--;
+        updateQtd();
     }
 }

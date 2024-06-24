@@ -8,10 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import Models.Player;
-/**
- *
- * @author Lepec
- */
+
+
 public class MenuInicial {
     public static void CriaMenu(){
         JFrame frame = new JFrame();

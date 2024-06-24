@@ -7,26 +7,33 @@ package GUI;
 
 import java.awt.*;
 import javax.swing.*;
+
+import Logic.Controller;
 import Models.*;
 
 public class Interface{
-    //public static HandPanel hand_p1;
-    //public static HandPanel hand_p2;
     public static JFrame frame;
     public static CardInfoPanel infoCard;
+    public static Controller controller;
+    public static JLabel nome_p1,vida_p1,nome_p2,vida_p2;
+
     public static void CriaUI(Player p1, Player p2){
         frame = new JFrame();
+
         // Parte Esquerda - Infos
         JPanel infos = new JPanel(new BorderLayout());
-        JPanel info_p2 = new JPanel();
+        JPanel info_p2 = new JPanel(new GridLayout(2,1,10,10));
         JPanel turno = new JPanel(new GridLayout(7, 1));
-        JPanel info_p1 = new JPanel();
-        JLabel nome_p1 = new JLabel(p1.nome);
-        JLabel vida_p1 = new JLabel("Vida: 5000");
-        JLabel nome_p2 = new JLabel(p2.nome);
-        JLabel vida_p2 = new JLabel("Vida: 5000");
-        JButton btt_encerrarTurno = new JButton("Encerrar Turno");
+        JPanel info_p1 = new JPanel(new GridLayout(2,1,10,10));
+        nome_p1 = new JLabel(p1.nome);
+        nome_p1.setHorizontalAlignment(JLabel.CENTER);
+        vida_p1 = new JLabel("Vida: 5000");
+        nome_p2 = new JLabel(p2.nome);
+        vida_p2 = new JLabel("Vida: 5000");
 
+
+
+        ChangeTurnButton btt_encerrarTurno = new ChangeTurnButton("Encerrar Turno");
         info_p1.add(nome_p1);
         info_p1.add(vida_p1);
         info_p2.add(nome_p2);
@@ -49,7 +56,6 @@ public class Interface{
         scroll_p1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         //-------------------------
         // Parte Centro - Cartas p2
-
         JScrollPane scroll_p2 = new JScrollPane(p2.hand);
         scroll_p2.setBorder(null);
         scroll_p2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -57,11 +63,11 @@ public class Interface{
         //-------------------------
         // Parte Centro - Campo
         JPanel campo = new JPanel(new GridLayout(2, 1, 5, 20));
-        FieldPanel campo_p1 = new FieldPanel(p1);
-        FieldPanel campo_p2 = new FieldPanel(p2);
-        campo.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-        campo.add(campo_p1);
-        campo.add(campo_p2);
+//        FieldPanel campo_p1 = new FieldPanel(p1);
+//        FieldPanel campo_p2 = new FieldPanel(p2);
+        campo.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        campo.add(p2.field);
+        campo.add(p1.field);
         campo.setBackground(Color.BLUE);
         //-------------------------
         centro.add(scroll_p1, BorderLayout.SOUTH);
@@ -86,10 +92,40 @@ public class Interface{
         frame.add(infos, BorderLayout.WEST);
         frame.add(centro, BorderLayout.CENTER);
         frame.add(direita, BorderLayout.EAST);
-        
+
+        controller = new Controller(p1,p2);
+        btt_encerrarTurno.addMouseListener(controller);
+        deck_p1.deckButton.addMouseListener(controller);
+        deck_p2.deckButton.addMouseListener(controller);
+        for(FieldCardPanel x : p1.field.getFieldList()){
+            x.addMouseListener(controller);
+            x.btt.addMouseListener(controller);
+        }
+        for(FieldCardPanel x : p2.field.getFieldList()){
+            x.addMouseListener(controller);
+            x.btt.addMouseListener(controller);
+        }
+
+
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    }
+
+    public static void HighlightsPlayer(Player active, Player p1, Player p2){
+        if(active == p1){
+            nome_p1.setFont(new Font("Arial",Font.BOLD, 22));
+            vida_p1.setFont(new Font("Arial",Font.BOLD, 22));
+            nome_p2.setFont(new Font("Arial",Font.BOLD, 12));
+            vida_p2.setFont(new Font("Arial",Font.BOLD, 12));
+        }
+        else{
+            nome_p2.setFont(new Font("Arial",Font.BOLD, 22));
+            vida_p2.setFont(new Font("Arial",Font.BOLD, 22));
+            nome_p1.setFont(new Font("Arial",Font.BOLD, 12));
+            vida_p1.setFont(new Font("Arial",Font.BOLD, 12));
+        }
     }
 }

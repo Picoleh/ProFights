@@ -18,6 +18,20 @@ public class Card {
         if(nome == NomeCarta.None)
             setBackCardImg();
 
+        VIDA = 100;
+        switch (nome){
+            case NomeCarta.Adriana:
+                ATK = 12;
+                DEF = 39;
+                break;
+            case NomeCarta.Fabiano:
+                ATK = 59;
+                DEF = 26;
+                break;
+            case NomeCarta.Perea:
+                ATK = 19;
+                DEF = 65;
+        }
     }
 
     public void setBackCardImg(){
@@ -32,4 +46,5 @@ public class Card {
     public static Image MudaTamanhoImagem(Image img, double porcen){
         return img.getScaledInstance((int)(img.getWidth(null) * porcen), (int)(img.getHeight(null) * porcen), Image.SCALE_SMOOTH);
     }
+    
 }

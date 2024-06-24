@@ -15,21 +15,22 @@ import Models.*;
 
 
 public class HandPanel extends JPanel{
-    private Player playerAssociado;
+    public Player playerAssociated;
     private ArrayList<HandCardButton> listButton;
     public HandPanel(Player player){
-        this.playerAssociado = player;
-        this.listButton = new ArrayList<>();
+        listButton = new ArrayList<>();
+        this.playerAssociated = player;
         this.setLayout(new FlowLayout());
-        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
     }
 
     public void update(){
         this.removeAll();
         listButton.clear();
-        for(Card c : playerAssociado.cards){
+        for(Card c : playerAssociated.cards){
             if(c.location == Location.HAND){
                 HandCardButton cb = new HandCardButton(c,this);
+                cb.addMouseListener(Interface.controller);
                 this.add(cb);
                 listButton.add(cb);
             }
@@ -49,10 +50,22 @@ public class HandPanel extends JPanel{
 
     public Card getSelectedCard(){
         for(HandCardButton c : listButton){
-            if(c.isSelected)
+            if(c.isSelected){
+                c.getCard().location = Location.FIELD;
+                update();
                 return c.getCard();
+            }
         }
         return null;
+    }
+
+    public boolean isAnySelected(){
+        for(HandCardButton c : listButton){
+            if(c.isSelected){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addRandomCardToHand(){
@@ -65,15 +78,12 @@ public class HandPanel extends JPanel{
         }catch(Exception ex){
             System.out.println(ex);
         }
-        int atk=0,def=0;
-        switch (nomeEnum){
-            case NomeCarta.Adriana:
-                atk = 33;
-                def = 2;
-                break;
-        }
         Card c = new Card(nomeEnum,Location.HAND,img);
-        playerAssociado.cards.add(c);
+        playerAssociated.cards.add(c);
         update();
+    }
+
+    public ArrayList<HandCardButton> getListHand(){
+        return listButton;
     }
 }

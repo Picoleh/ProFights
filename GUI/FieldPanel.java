@@ -8,21 +8,49 @@ package GUI;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
+
 import Models.*;
 
 public class FieldPanel extends JPanel{
-    private ArrayList<FieldCardButton> fieldCardButtons;
+    private ArrayList<FieldCardPanel> fieldCardPanels;
     public FieldPanel(Player player){
-        fieldCardButtons = new ArrayList<>();
+        fieldCardPanels = new ArrayList<>();
         this.setLayout(new GridLayout(2, 5, 5, 5));
         for(int i=0; i < 10; i++){
-//            JPanel conjunto = new JPanel(new BorderLayout());
-//            JPanel ImgCarta = new JPanel();
-//            JPanel vida = new JPanel();
-            FieldCardButton c = new FieldCardButton(player);
-            fieldCardButtons.add(c);
-            //ImgCarta.add(c);
+            FieldCardPanel c = new FieldCardPanel(player, this);
+            fieldCardPanels.add(c);
+            c.addMouseListener(Interface.controller);
+            c.btt.addMouseListener(Interface.controller);
             this.add(c);
         }
+    }
+
+    public void DeselectAll(){
+        for(FieldCardPanel panel : fieldCardPanels){
+            panel.btt.setBorder(null);
+            panel.isSelected = false;
+        }
+    }
+
+    public FieldCardPanel getFieldSelected(){
+        for(FieldCardPanel c : fieldCardPanels){
+            if(c.isSelected){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public boolean isAnySelected(){
+        for(FieldCardPanel c : fieldCardPanels){
+            if(c.isSelected){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<FieldCardPanel> getFieldList(){
+        return fieldCardPanels;
     }
 }
