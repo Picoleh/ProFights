@@ -18,6 +18,8 @@ public class Interface{
     public static JLabel nome_p1,vida_p1,nome_p2,vida_p2;
 
     public static void CriaUI(Player p1, Player p2){
+        Sountrack menuost = new Sountrack();
+        menuost.playOST("battle");
         frame = new JFrame();
 
         // Parte Esquerda - Infos
