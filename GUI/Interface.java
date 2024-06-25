@@ -6,10 +6,16 @@
 package GUI;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.swing.*;
 
 import Logic.Controller;
 import Models.*;
+import Models.CardModels.Card;
 
 public class Interface{
     public static JFrame frame;
@@ -18,8 +24,6 @@ public class Interface{
     public static JLabel nome_p1,vida_p1,nome_p2,vida_p2;
 
     public static void CriaUI(Player p1, Player p2){
-        Sountrack menuost = new Sountrack();
-        menuost.playOST("battle");
         frame = new JFrame();
 
         // Parte Esquerda - Infos
@@ -135,15 +139,39 @@ public class Interface{
     public static void updatesLifes(Player p1, Player p2){
         Interface.vida_p1.setText("Vida: " + p1.vida);
         Interface.vida_p2.setText("Vida: " + p2.vida);
+        checkWinsConditions(p1,p2);
+    }
+
+    public static void checkWinsConditions(Player p1, Player p2){
         if(p1.vida <= 0){
-            JOptionPane.showMessageDialog(null, p2.nome + " GANHOU!!!!");
-            frame.dispose();
-            MenuInicial.MostraMenu();
+            showWinner(p2, false);
         }
-        if(p2.vida <= 0){
-            JOptionPane.showMessageDialog(null, p1.nome + " GANHOU!!!!");
-            frame.dispose();
-            MenuInicial.MostraMenu();
+        else if(p2.vida <= 0){
+            showWinner(p1, false);
         }
+
+
+        Set<NomeCarta> set = new HashSet<>();
+        p1.cards.stream().filter(x -> x.location == Location.FIELD && set.add(x.nome));
+
+        if(set.size() >= 4){
+            showWinner(p1,true);
+        }
+
+        set.clear();
+        p2.cards.stream().filter(x -> x.location == Location.FIELD && set.add(x.nome));
+        if(set.size() >= 4){
+            showWinner(p2, true);
+        }
+
+    }
+
+    private static void showWinner(Player winner, boolean isWinByExodia){
+        String exodia = "";
+        if(isWinByExodia)
+            exodia = "O Recogna foi montado....\nNão há como evitar a derrota...";
+        JOptionPane.showMessageDialog(null, winner.nome + " GANHOU!!!!\n" + exodia);
+        frame.dispose();
+        MenuInicial.MostraMenu();
     }
 }

@@ -10,4 +10,7 @@ public class Effect {
         this.value = value;
     }
 
+    public void passaTurno(){
+        turnosRestantes--;
+    }
 }

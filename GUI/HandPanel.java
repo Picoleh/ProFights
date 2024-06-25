@@ -71,7 +71,7 @@ public class HandPanel extends JPanel{
 
     public void addRandomCardToHand(){
         Random rd = new Random();
-        NomeCarta nomeEnum = NomeCarta.values()[rd.nextInt(1,NomeCarta.values().length)];
+        NomeCarta nomeEnum = NomeCarta.values()[rd.nextInt(1,NomeCarta.values().length - 2)];
         Image img = null;
         String url = "/GUI/Cards/"+nomeEnum+".jpeg";
         try{
@@ -80,15 +80,15 @@ public class HandPanel extends JPanel{
             System.out.println(ex);
         }
         Card c = switch (nomeEnum) {
-            case NomeCarta.Perea -> new PereaCard(Location.HAND, img);
-            case NomeCarta.Adriana -> new AdrianaCard(Location.HAND, img);
-            case NomeCarta.Fabiano -> new FabianoCard(Location.HAND, img);
-            case NomeCarta.Papa -> new PapaCard(Location.HAND, img);
-            case NomeCarta.Paiola -> new PaiolaCard(Location.HAND, img);
-            case NomeCarta.Nilceu -> new NilceuCard(Location.HAND,img);
-            case NomeCarta.Krayton -> new KraytonCard(Location.HAND,img);
-            case NomeCarta.Hercules -> new HerculesCard(Location.HAND,img);
-            case NomeCarta.Douglas -> new DouglasCard(Location.HAND,img);
+            case Perea -> new PereaCard(Location.HAND, img);
+            case Adriana -> new AdrianaCard(Location.HAND, img);
+            case Fabiano -> new FabianoCard(Location.HAND, img);
+            case Papa -> new PapaCard(Location.HAND, img);
+            case Paiola -> new PaiolaCard(Location.HAND, img);
+            case Nilceu -> new NilceuCard(Location.HAND,img);
+            case Krayton -> new KraytonCard(Location.HAND,img);
+            case Hercules -> new HerculesCard(Location.HAND,img);
+            case Douglas -> new DouglasCard(Location.HAND,img);
             default -> null;
         };
         playerAssociated.cards.add(c);

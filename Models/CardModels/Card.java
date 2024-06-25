@@ -2,11 +2,13 @@ package Models.CardModels;
 
 
 import Models.EffectsModels.Effect;
+import Models.EffectsModels.EffectsType;
 import Models.Location;
 import Models.NomeCarta;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public abstract class Card {
@@ -44,4 +46,30 @@ public abstract class Card {
 
     public abstract void Power();
 
+    public int getDEF(){
+        int soma = 0;
+        for(Effect ef : efeitosAtivos){
+            if(ef.type == EffectsType.Deffense)
+                soma += ef.value;
+        }
+        return DEF + soma;
+    }
+
+    public int getATK(){
+        int soma = 0;
+        for(Effect ef : efeitosAtivos){
+            if(ef.type == EffectsType.Attack)
+                soma += ef.value;
+        }
+        return ATK + soma;
+    }
+
+    public boolean getEnable(){
+        for(Effect ef : efeitosAtivos){
+            if(ef.type == EffectsType.Enable){
+                return false;
+            }
+        }
+        return true;
+    }
 }

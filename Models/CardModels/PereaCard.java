@@ -1,7 +1,6 @@
 package Models.CardModels;
 
 import GUI.Interface;
-import Logic.Controller;
 import Models.EffectsModels.Effect;
 import Models.EffectsModels.EffectsType;
 import Models.FieldCardButton;

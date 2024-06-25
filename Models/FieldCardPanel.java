@@ -110,7 +110,9 @@ public class FieldCardPanel extends JPanel {
     }
 
     public boolean attack(FieldCardPanel opponent){
-        opponent.getCard().VIDA -= (int)(card.ATK * ((100 -opponent.getCard().DEF) / 100.0));
+        System.out.println("Atacando: " + card.nome + " bATK: " + card.ATK + " eATK: " + card.getATK());
+        System.out.println("Defendendo: " + opponent.getCard().nome + " bDEF: " + opponent.getCard().DEF + " eDEF: " + opponent.getCard().getDEF());
+        opponent.getCard().VIDA -= (int)(card.getATK() * ((100 -opponent.getCard().getDEF()) / 100.0));
         opponent.updateLife();
         return card.ATK != 0;
     }

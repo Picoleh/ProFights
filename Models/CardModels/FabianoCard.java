@@ -1,6 +1,8 @@
 package Models.CardModels;
 
 import GUI.Interface;
+import Models.EffectsModels.Effect;
+import Models.EffectsModels.EffectsType;
 import Models.FieldCardButton;
 import Models.FieldCardPanel;
 import Models.Location;
@@ -27,6 +29,7 @@ public class FabianoCard extends Card{
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getSource() instanceof FieldCardButton fieldButton){
+                        fieldButton.Pai.card.efeitosAtivos.add(new Effect(1, EffectsType.Enable,0));
                         f.dispose();
                     }
                 }
