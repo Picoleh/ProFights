@@ -174,6 +174,7 @@ public class Interface{
             exodia = "O Recogna foi montado....\nNão há como evitar a derrota...";
         JOptionPane.showMessageDialog(null, winner.nome + " GANHOU!!!!\n" + exodia);
         frame.dispose();
+        menuost.stopOST();
         MenuInicial.MostraMenu();
     }
 }
