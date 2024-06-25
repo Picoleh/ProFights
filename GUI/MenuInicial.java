@@ -12,6 +12,8 @@ import Models.Player;
 public class MenuInicial {
     private static JFrame frame;
     public static void CriaMenu(){
+        Sountrack menuost = new Sountrack();
+        menuost.playOST("menu");
         frame = new JFrame();
         JPanel buttons = new JPanel(new GridLayout(1,7));
         JPanel btts = new JPanel(new GridLayout(6, 1));
@@ -38,6 +40,7 @@ public class MenuInicial {
                 Player p1 = new Player(nomeP1);
                 Player p2 = new Player(nomeP2);
                 frame.setVisible(false);
+                menuost.stopOST();
                 Interface.CriaUI(p1, p2);
             }
         });
