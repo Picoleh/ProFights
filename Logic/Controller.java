@@ -7,6 +7,7 @@ import GUI.Interface;
 import Models.*;
 import Models.CardModels.Card;
 import Models.CardModels.DouglasCard;
+import Models.EffectsModels.Effect;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -48,13 +49,14 @@ public class Controller implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e){
-        if (e.getSource() instanceof HandCardButton handButton && handButton.getPai().playerAssociated == activePlayer) {
+        if (e.getSource() instanceof HandCardButton handButton && handButton.getPai().playerAssociated == activePlayer) { // Sua carta na mao
             handButton.select();
         }
-        else if (e.getSource() instanceof FieldCardButton fieldButton) {
-            if (fieldButton.playerAssociated == activePlayer) {
-                if (activePlayer.hand.isAnySelected() && fieldButton.Pai.getCard() == null) {
+        else if (e.getSource() instanceof FieldCardButton fieldButton && fieldButton.isEnabled()) {
+            if (fieldButton.playerAssociated == activePlayer) { // Sua carta no campo
+                if (activePlayer.hand.isAnySelected() && fieldButton.Pai.getCard() == null) { // colocar carta campo
                     fieldButton.Pai.addCard(activePlayer.hand.getSelectedCard());
+                    Interface.checkWinsConditions(p1,p2);
                 } else if (fieldButton.Pai.getCard() != null) {
                     if(e.getClickCount() == 2){
                         try {
@@ -78,20 +80,20 @@ public class Controller implements MouseListener, ActionListener {
                         fieldButton.Pai.select(TypeSelection.NORMAL);
                     }
                 }
-            } else { // PlayerAssociated == enemyPlayer
+            } else { // Carta oponente
                 if (fieldButton.Pai.getCard() != null && activePlayer.field.isAnySelected() && !playerAttacked) {
                     playerAttacked = activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
                 }
             }
         }
-        else if (e.getSource() instanceof DeckCardButton deckButton && deckButton.playerAssociated == activePlayer) {
+        else if (e.getSource() instanceof DeckCardButton deckButton && deckButton.playerAssociated == activePlayer) { // Sacar carta
             try {
                 if (deckButton.getCardsLeft() <= 0) {
                     throw new OutOfCardsException();
                 }
-                if (playerDrawed) {
-                    throw new PlayerAlreadyDrawedException();
-                }
+//                if (playerDrawed) {
+//                    throw new PlayerAlreadyDrawedException();
+//                }
 
                 playerDrawed = true;
                 activePlayer.DrawCard();
@@ -148,10 +150,12 @@ public class Controller implements MouseListener, ActionListener {
 
     public void ChangeTurns(){
         CalculateFinalDamage();
-
+        updateEffects(activePlayer);
         Player aux = activePlayer;
         activePlayer = enemyPlayer;
         enemyPlayer = aux;
+
+        checkEffects(activePlayer);
 
         activePlayer.hand.DeselectAll();
         activePlayer.field.DeselectAll();
@@ -180,5 +184,24 @@ public class Controller implements MouseListener, ActionListener {
 
         enemyPlayer.vida -= dmg;
         Interface.updatesLifes(p1,p2);
+    }
+
+    private void updateEffects(Player activePlayer){
+        for(Card c : activePlayer.cards){
+            for(Effect e : c.efeitosAtivos){
+                e.passaTurno();
+            }
+            c.efeitosAtivos.removeIf(x -> x.turnosRestantes <= 0);
+        }
+    }
+
+    private void checkEffects(Player activePlayer){
+        for(FieldCardPanel f : activePlayer.field.getFieldList()){
+            if(f.card != null){
+                boolean opa = f.card.getEnable();
+                f.setEnabled(opa);
+                f.btt.setEnabled(opa);
+            }
+        }
     }
 }

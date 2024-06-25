@@ -20,16 +20,20 @@ public class PaiolaCard extends Card{
         JFrame f = new JFrame();
         JPanel field = new JPanel(new GridLayout(2,5,5,5));
         field.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
-
+        final int[] qtd = {2};
         for(FieldCardPanel panel : Interface.controller.getActivePlayer().field.getFieldList()){
             FieldCardPanel aux = new FieldCardPanel(panel);
             aux.btt.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getSource() instanceof FieldCardButton fieldButton){
-                        panel.card.VIDA += 70;
+                        panel.card.VIDA += 40;
+                        aux.card.VIDA += 40;
                         panel.updateLife();
-                        f.dispose();
+                        aux.updateLife();
+                        if(qtd[0]-- <= 0){
+                            f.dispose();
+                        }
                     }
                 }
             });

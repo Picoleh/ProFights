@@ -5,6 +5,7 @@ import Models.NomeCarta;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.util.Objects;
 
 public class DouglasCard extends Card{
     public boolean isInDefenseMode = false;
@@ -35,5 +36,10 @@ public class DouglasCard extends Card{
         }catch(Exception ex){
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public boolean equals(final Object obj){
+        return Objects.equals(nome,((Card) obj).nome);
     }
 }
