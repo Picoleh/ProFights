@@ -8,22 +8,20 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import Models.Player;
-/**
- *
- * @author Lepec
- */
+
 public class MenuInicial {
+    private static JFrame frame;
     public static void CriaMenu(){
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         JPanel buttons = new JPanel(new GridLayout(1,7));
         JPanel btts = new JPanel(new GridLayout(6, 1));
         JButton bttPlay = new JButton("Jogar");
         JButton bttHowToPlay = new JButton("Como Jogar");
         JButton bttExit = new JButton("Sair");
 
-        JLabel logoP = new JLabel(new ImageIcon("GUI\\UtilImages\\Logo.png"));
+        JLabel logoP = new JLabel(new ImageIcon("GUI/UtilImages/Logo.png"));
         logoP.setSize(1000, 500);
-        
+
         btts.add(bttPlay);
         btts.add(new JLabel());
         btts.add(bttHowToPlay);
@@ -34,11 +32,12 @@ public class MenuInicial {
         bttPlay.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 String nomeP1 = "s", nomeP2 = "l";
-                //nomeP1 = JOptionPane.showInputDialog(null, "Informe o nome Player 1: ", "", JOptionPane.INFORMATION_MESSAGE);
-                //nomeP2 = JOptionPane.showInputDialog(null, "Informe o nome Player 2: ", "", JOptionPane.INFORMATION_MESSAGE);
+                nomeP1 = JOptionPane.showInputDialog(null, "Informe o nome Player 1: ", "", JOptionPane.INFORMATION_MESSAGE);
+                nomeP2 = JOptionPane.showInputDialog(null, "Informe o nome Player 2: ", "", JOptionPane.INFORMATION_MESSAGE);
 
                 Player p1 = new Player(nomeP1);
                 Player p2 = new Player(nomeP2);
+                frame.setVisible(false);
                 Interface.CriaUI(p1, p2);
             }
         });
@@ -50,15 +49,17 @@ public class MenuInicial {
         buttons.add(new JLabel());
         buttons.add(new JLabel());
         buttons.add(new JLabel());
-        
+
         frame.add(logoP, BorderLayout.NORTH);
         frame.add(buttons, BorderLayout.SOUTH);
-
+        
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(3);
     }
-    
-}
 
+    public static void MostraMenu(){
+        frame.setVisible(true);
+    }
+}

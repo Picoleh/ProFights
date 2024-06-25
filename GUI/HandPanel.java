@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Models.*;
+import Models.CardModels.*;
 
 
 public class HandPanel extends JPanel{
@@ -78,7 +79,18 @@ public class HandPanel extends JPanel{
         }catch(Exception ex){
             System.out.println(ex);
         }
-        Card c = new Card(nomeEnum,Location.HAND,img);
+        Card c = switch (nomeEnum) {
+            case NomeCarta.Perea -> new PereaCard(Location.HAND, img);
+            case NomeCarta.Adriana -> new AdrianaCard(Location.HAND, img);
+            case NomeCarta.Fabiano -> new FabianoCard(Location.HAND, img);
+            case NomeCarta.Papa -> new PapaCard(Location.HAND, img);
+            case NomeCarta.Paiola -> new PaiolaCard(Location.HAND, img);
+            case NomeCarta.Nilceu -> new NilceuCard(Location.HAND,img);
+            case NomeCarta.Krayton -> new KraytonCard(Location.HAND,img);
+            case NomeCarta.Hercules -> new HerculesCard(Location.HAND,img);
+            case NomeCarta.Douglas -> new DouglasCard(Location.HAND,img);
+            default -> null;
+        };
         playerAssociated.cards.add(c);
         update();
     }

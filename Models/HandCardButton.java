@@ -6,6 +6,7 @@
 package Models;
 
 import GUI.HandPanel;
+import Models.CardModels.Card;
 
 import java.awt.*;
 import javax.swing.*;

@@ -6,6 +6,7 @@
 package Models;
 
 import GUI.*;
+import Models.CardModels.Card;
 
 import java.awt.*;
 import java.util.*;

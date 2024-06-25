@@ -1,6 +1,7 @@
 package Models;
 
 import GUI.FieldPanel;
+import Models.CardModels.Card;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -29,6 +30,21 @@ public class FieldCardPanel extends JPanel {
         this.setBackground(Color.PINK);
     }
 
+    public FieldCardPanel(FieldCardPanel copy){
+        super(new BorderLayout());
+        this.card = copy.card;
+        btt = new FieldCardButton(this.playerAssociated, this);
+        Vida = new JProgressBar();
+        configuraLifeBar();
+        this.add(btt, BorderLayout.CENTER);
+        this.add(Vida, BorderLayout.SOUTH);
+        this.setBackground(Color.PINK);
+        if(card != null){
+            updateLife();
+            addCard(card);
+        }
+    }
+
     public void configuraLifeBar(){
         Vida.setMaximum(100);
         Vida.setMinimum(0);
@@ -40,23 +56,35 @@ public class FieldCardPanel extends JPanel {
 
     public void addCard(Card c){
         card = c;
-        btt.setIcon(new ImageIcon(Card.MudaTamanhoImagem(c.img,0.08)));
+        updateImage();
         updateLife();
         Vida.setBackground(Color.RED);
         Vida.setForeground(Color.GREEN);
         Vida.setStringPainted(true);
     }
 
+    public void updateImage(){
+        btt.setIcon(new ImageIcon(Card.MudaTamanhoImagem(card.img,0.08)));
+        btt.revalidate();
+        btt.repaint();
+    }
+
+    public void removeCard(){
+        card = null;
+        btt.setIcon(null);
+        Vida.setBackground(Color.WHITE);
+        Vida.setStringPainted(false);
+        Vida.setValue(0);
+        configuraLifeBar();
+    }
+
     public void updateLife(){
         if(card.VIDA <= 0){
-            card = null;
-            btt.setIcon(null);
-            Vida.setBackground(Color.gray);
-            Vida.setStringPainted(false);
-            Vida.setValue(0);
-            configuraLifeBar();
+            removeCard();
         }
         else{
+            if(card.VIDA > 100)
+                card.VIDA -= card.VIDA - 100;
             Vida.setValue(card.VIDA);
         }
     }
@@ -72,6 +100,7 @@ public class FieldCardPanel extends JPanel {
         }
 
         if(typeSelection == TypeSelection.POWERED){
+            this.isSelected = true;
             btt.setBorder(new LineBorder(Color.MAGENTA,5));
         }
     }
@@ -80,8 +109,9 @@ public class FieldCardPanel extends JPanel {
         return card;
     }
 
-    public void attack(FieldCardPanel opponent){
-        opponent.getCard().VIDA -= card.ATK;
+    public boolean attack(FieldCardPanel opponent){
+        opponent.getCard().VIDA -= (int)(card.ATK * ((100 -opponent.getCard().DEF) / 100.0));
         opponent.updateLife();
+        return card.ATK != 0;
     }
 }

@@ -2,11 +2,13 @@ package Logic;
 
 import Excep.OutOfCardsException;
 import Excep.PlayerAlreadyDrawedException;
+import Excep.PlayerAlreadyUsedPowerUpException;
 import GUI.Interface;
 import Models.*;
+import Models.CardModels.Card;
+import Models.CardModels.DouglasCard;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
@@ -14,7 +16,7 @@ public class Controller implements MouseListener, ActionListener {
     private Player activePlayer;
     private Player enemyPlayer;
     private Player p1,p2;
-    private boolean playerDrawed=false,playerAttacked=false,playerUsedPower=false,isPowerActive=false;
+    private boolean playerDrawed=false,playerAttacked=false,playerUsedPower=false;
 
     public Controller(Player p1, Player p2){
         startGame(p1,p2);
@@ -55,11 +57,21 @@ public class Controller implements MouseListener, ActionListener {
                     fieldButton.Pai.addCard(activePlayer.hand.getSelectedCard());
                 } else if (fieldButton.Pai.getCard() != null) {
                     if(e.getClickCount() == 2){
-                        int op = JOptionPane.showConfirmDialog(null, "Deseja ativar o poder de: " + fieldButton.Pai.getCard().nome);
-                        if(op == JOptionPane.YES_OPTION){
-                            playerUsedPower = true;
-                            fieldButton.Pai.select(TypeSelection.POWERED);
-                            fieldButton.Pai.getCard();
+                        try {
+                            if(playerUsedPower){
+                                throw new PlayerAlreadyUsedPowerUpException();
+                            }
+                            int op = JOptionPane.showConfirmDialog(null, "Deseja ativar o poder de: " + fieldButton.Pai.getCard().nome);
+                            if(op == JOptionPane.YES_OPTION){
+                                playerUsedPower = true;
+                                fieldButton.Pai.select(TypeSelection.POWERED);
+                                fieldButton.Pai.getCard().Power();
+                                if(fieldButton.Pai.getCard() instanceof DouglasCard) {
+                                    fieldButton.Pai.updateImage();
+                                }
+                            }
+                        }catch (Exception ex){
+                            JOptionPane.showMessageDialog(null, ex);
                         }
                     }
                     else{
@@ -68,8 +80,7 @@ public class Controller implements MouseListener, ActionListener {
                 }
             } else { // PlayerAssociated == enemyPlayer
                 if (fieldButton.Pai.getCard() != null && activePlayer.field.isAnySelected() && !playerAttacked) {
-                    playerAttacked = true;
-                    activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
+                    playerAttacked = activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
                 }
             }
         }
@@ -136,6 +147,8 @@ public class Controller implements MouseListener, ActionListener {
     }
 
     public void ChangeTurns(){
+        CalculateFinalDamage();
+
         Player aux = activePlayer;
         activePlayer = enemyPlayer;
         enemyPlayer = aux;
@@ -148,5 +161,24 @@ public class Controller implements MouseListener, ActionListener {
         playerDrawed = playerAttacked = playerUsedPower = false;
 
         Interface.HighlightsPlayer(activePlayer,p1,p2);
+    }
+
+    public Player getActivePlayer(){
+        return activePlayer;
+    }
+
+    public Player getEnemyPlayer(){
+        return enemyPlayer;
+    }
+
+    private void CalculateFinalDamage(){
+        int dmg = 0;
+        for(FieldCardPanel f : activePlayer.field.getFieldList()){
+            if(f.card != null)
+                dmg += f.card.ATK;
+        }
+
+        enemyPlayer.vida -= dmg;
+        Interface.updatesLifes(p1,p2);
     }
 }

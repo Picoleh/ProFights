@@ -27,10 +27,11 @@ public class Interface{
         JPanel info_p1 = new JPanel(new GridLayout(2,1,10,10));
         nome_p1 = new JLabel(p1.nome);
         nome_p1.setHorizontalAlignment(JLabel.CENTER);
-        vida_p1 = new JLabel("Vida: 5000");
+        vida_p1 = new JLabel();
         nome_p2 = new JLabel(p2.nome);
-        vida_p2 = new JLabel("Vida: 5000");
-
+        nome_p2.setHorizontalAlignment(JLabel.CENTER);
+        vida_p2 = new JLabel();
+        updatesLifes(p1,p2);
 
 
         ChangeTurnButton btt_encerrarTurno = new ChangeTurnButton("Encerrar Turno");
@@ -126,6 +127,21 @@ public class Interface{
             vida_p2.setFont(new Font("Arial",Font.BOLD, 22));
             nome_p1.setFont(new Font("Arial",Font.BOLD, 12));
             vida_p1.setFont(new Font("Arial",Font.BOLD, 12));
+        }
+    }
+
+    public static void updatesLifes(Player p1, Player p2){
+        Interface.vida_p1.setText("Vida: " + p1.vida);
+        Interface.vida_p2.setText("Vida: " + p2.vida);
+        if(p1.vida <= 0){
+            JOptionPane.showMessageDialog(null, p2.nome + " GANHOU!!!!");
+            frame.dispose();
+            MenuInicial.MostraMenu();
+        }
+        if(p2.vida <= 0){
+            JOptionPane.showMessageDialog(null, p1.nome + " GANHOU!!!!");
+            frame.dispose();
+            MenuInicial.MostraMenu();
         }
     }
 }

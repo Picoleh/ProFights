@@ -1,17 +1,17 @@
 package Models;
 
+import Models.CardModels.Card;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class DeckCardButton extends JButton {
     private int qtd;
     public Player playerAssociated;
     public DeckCardButton(Player player){
         playerAssociated = player;
-        qtd = 5;
+        qtd = 20;
         setBackCardImg();
         updateQtd();
         this.setHorizontalTextPosition(JButton.CENTER);

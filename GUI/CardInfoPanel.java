@@ -3,7 +3,7 @@ package GUI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import Models.Card;
+import Models.CardModels.Card;
 
 public class CardInfoPanel extends JLabel {
     public CardInfoPanel(){
