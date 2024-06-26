@@ -15,6 +15,7 @@ public class KraytonCard extends Card{
         this.location = Location.HAND;
         Interface.controller.getActivePlayer().hand.update();
         Interface.controller.getActivePlayer().field.getFieldSelected().removeCard();
+        Interface.controller.attacksLeft++;
         this.VIDA += 50;
     }
 }

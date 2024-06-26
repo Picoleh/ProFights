@@ -1,14 +1,13 @@
 package Logic;
 
-import Excep.OutOfCardsException;
-import Excep.PlayerAlreadyDrawedException;
-import Excep.PlayerAlreadyUsedPowerUpException;
-import GUI.Interface;
+import Excep.*;
+import GUI.*;
+import GUI.Deck.*;
+import GUI.Field.*;
+import GUI.Hand.*;
 import Models.*;
-import Models.CardModels.Card;
-import Models.CardModels.DouglasCard;
-import Models.EffectsModels.Effect;
-
+import Models.CardModels.*;
+import Models.EffectsModels.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -17,20 +16,14 @@ public class Controller implements MouseListener, ActionListener {
     private Player activePlayer;
     private Player enemyPlayer;
     private Player p1,p2;
-    private boolean playerDrawed=false,playerAttacked=false,playerUsedPower=false;
+    private boolean playerDrawed=false,playerUsedPower=false;
+    public int attacksLeft = 3;
 
     public Controller(Player p1, Player p2){
         startGame(p1,p2);
-        addAllListeners(p1,p2);
         this.p1 = p1;
         this.p2 = p2;
         Interface.HighlightsPlayer(p1,p1,p2);
-    }
-
-    public void addAllListeners(Player p1, Player p2){
-//        ArrayList<HandCardButton> handP1 = activePlayer.hand.getListHand();
-//        ArrayList<HandCardButton> handP2 = enemyPlayer.hand.getListHand();
-//        ArrayList<FieldCardButton> fieldP1 = activePlayer.field.getListfield();
     }
 
     public void choseWhoStarts(Player p1, Player p2){
@@ -54,10 +47,11 @@ public class Controller implements MouseListener, ActionListener {
         }
         else if (e.getSource() instanceof FieldCardButton fieldButton && fieldButton.isEnabled()) {
             if (fieldButton.playerAssociated == activePlayer) { // Sua carta no campo
-                if (activePlayer.hand.isAnySelected() && fieldButton.Pai.getCard() == null) { // colocar carta campo
+                if (PodeColocarCartaCampo(fieldButton)) { // colocar carta campo
                     fieldButton.Pai.addCard(activePlayer.hand.getSelectedCard());
                     Interface.checkWinsConditions(p1,p2);
-                } else if (fieldButton.Pai.getCard() != null) {
+                }
+                else if (fieldButton.Pai.getCard() != null) { // Selecionar carta seu campo
                     if(e.getClickCount() == 2){
                         try {
                             if(playerUsedPower){
@@ -68,7 +62,7 @@ public class Controller implements MouseListener, ActionListener {
                                 playerUsedPower = true;
                                 fieldButton.Pai.select(TypeSelection.POWERED);
                                 fieldButton.Pai.getCard().Power();
-                                if(fieldButton.Pai.getCard() instanceof DouglasCard) {
+                                if(fieldButton.Pai.getCard() instanceof DouglasCard || fieldButton.Pai.getCard() instanceof NilceuCard) {
                                     fieldButton.Pai.updateImage();
                                 }
                             }
@@ -81,8 +75,12 @@ public class Controller implements MouseListener, ActionListener {
                     }
                 }
             } else { // Carta oponente
-                if (fieldButton.Pai.getCard() != null && activePlayer.field.isAnySelected() && !playerAttacked) {
-                    playerAttacked = activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
+                if (PodeAtacar(fieldButton)) {
+                    boolean attacked = activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
+                    if(attacked){
+                        attacksLeft--;
+                        activePlayer.field.getFieldSelected().getCard().attacked = true;
+                    }
                 }
             }
         }
@@ -111,12 +109,10 @@ public class Controller implements MouseListener, ActionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
@@ -139,13 +135,13 @@ public class Controller implements MouseListener, ActionListener {
         }
     }
 
-    public void startGame(Player p1, Player p2){
-        choseWhoStarts(p1,p2);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public void startGame(Player p1, Player p2){
+        choseWhoStarts(p1,p2);
     }
 
     public void ChangeTurns(){
@@ -162,7 +158,8 @@ public class Controller implements MouseListener, ActionListener {
         enemyPlayer.hand.DeselectAll();
         enemyPlayer.field.DeselectAll();
 
-        playerDrawed = playerAttacked = playerUsedPower = false;
+        playerDrawed = playerUsedPower = false;
+        attacksLeft = 3;
 
         Interface.HighlightsPlayer(activePlayer,p1,p2);
     }
@@ -192,6 +189,18 @@ public class Controller implements MouseListener, ActionListener {
                 e.passaTurno();
             }
             c.efeitosAtivos.removeIf(x -> x.turnosRestantes <= 0);
+            if(c.nome == NomeCarta.AparecidoNilceu && c.efeitosAtivos.stream().noneMatch(x -> x.type == EffectsType.Deffense && x.value == 30)){
+                NilceuCard c1 = (NilceuCard) c;
+                c1.endPower();
+                for(FieldCardPanel f : activePlayer.field.getFieldList()){
+                    if(f.getCard() == c){
+                        f.updateImage();
+                        break;
+                    }
+                }
+            }
+
+            c.attacked = false;
         }
     }
 
@@ -203,5 +212,15 @@ public class Controller implements MouseListener, ActionListener {
                 f.btt.setEnabled(opa);
             }
         }
+    }
+
+
+    // Condições cliques
+    public boolean PodeColocarCartaCampo(FieldCardButton fieldButton){
+        return activePlayer.hand.isAnySelected() && fieldButton.Pai.getCard() == null;
+    }
+
+    public boolean PodeAtacar(FieldCardButton fieldButton){
+        return fieldButton.Pai.getCard() != null && activePlayer.field.isAnySelected() && !activePlayer.field.getFieldSelected().getCard().attacked && attacksLeft > 0;
     }
 }

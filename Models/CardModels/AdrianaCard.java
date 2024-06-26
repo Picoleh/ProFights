@@ -1,5 +1,6 @@
 package Models.CardModels;
 
+import GUI.Interface;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -11,6 +12,6 @@ public class AdrianaCard extends Card{
     }
 
     public void Power(){
-        //TODO poder adriana
+        Interface.controller.getActivePlayer().hand.addCardToHand(NomeCarta.Cachorro);
     }
 }

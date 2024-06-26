@@ -5,7 +5,10 @@
  */
 package Models;
 
-import GUI.*;
+import GUI.Deck.DeckPanel;
+import GUI.Field.FieldPanel;
+import GUI.Hand.HandPanel;
+import GUI.Interface;
 import Models.CardModels.Card;
 
 import java.awt.*;
@@ -15,7 +18,7 @@ public class Player {
     public String nome;
     public int vida;
     public ArrayList<Card> cards;
-    public HandPanel hand = new HandPanel(this);
+    public HandPanel hand = new HandPanel(this,(Interface.class.getResource("/GUI/UtilImages/wood.png")));
     public FieldPanel field = new FieldPanel(this);;
     public DeckPanel deck = new DeckPanel(this);
     
@@ -23,7 +26,7 @@ public class Player {
         this.nome = nome;
         vida = 5000;
         cards = new ArrayList<>();
-        hand.setBackground(Color.GREEN);
+        //hand.setOpaque(false);
     }
 
     public void DrawCard(){

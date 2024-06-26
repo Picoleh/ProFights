@@ -3,8 +3,8 @@ package Models.CardModels;
 import GUI.Interface;
 import Models.EffectsModels.Effect;
 import Models.EffectsModels.EffectsType;
-import Models.FieldCardButton;
-import Models.FieldCardPanel;
+import GUI.Field.FieldCardButton;
+import GUI.Field.FieldCardPanel;
 import Models.Location;
 import Models.NomeCarta;
 
