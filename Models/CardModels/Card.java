@@ -8,7 +8,6 @@ import Models.NomeCarta;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public abstract class Card {
@@ -17,6 +16,7 @@ public abstract class Card {
     public Location location;
     public int ATK, DEF, VIDA;
     public ArrayList<Effect> efeitosAtivos;
+    public boolean attacked = false;
 
     public Card(NomeCarta nome, Location location, Image img, int atk, int def){
         this.nome = nome;

@@ -1,8 +1,8 @@
 package Models.CardModels;
 
 import GUI.Interface;
-import Models.FieldCardButton;
-import Models.FieldCardPanel;
+import GUI.Field.FieldCardButton;
+import GUI.Field.FieldCardPanel;
 import Models.Location;
 import Models.NomeCarta;
 

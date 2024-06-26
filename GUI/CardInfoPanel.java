@@ -7,9 +7,8 @@ import Models.CardModels.Card;
 
 public class CardInfoPanel extends JLabel {
     public CardInfoPanel(){
-        this.setOpaque(true);
+        this.setOpaque(false);
         this.setHorizontalAlignment(JLabel.CENTER);
-        this.setBackground(Color.PINK);
         setBackCardImg();
     }
 
