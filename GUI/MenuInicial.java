@@ -44,6 +44,12 @@ public class MenuInicial {
                 Interface.CriaUI(p1, p2);
             }
         });
+
+        bttHowToPlay.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent ev){
+                    ComoJogar.CriaComoJogar();
+                }
+            });
         
         buttons.add(new JLabel());
         buttons.add(new JLabel());
