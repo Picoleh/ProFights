@@ -23,21 +23,18 @@ public class Controller implements MouseListener, ActionListener {
         startGame(p1,p2);
         this.p1 = p1;
         this.p2 = p2;
-        Interface.HighlightsPlayer(p1,p1,p2);
     }
 
     public void choseWhoStarts(Player p1, Player p2){
         Random r = new Random();
-
-//        if (r.nextInt(2) == 0) {
-//            activePlayer = p1;
-//            enemyPlayer = p2;
-//        } else {
-//            activePlayer = p2;
-//            enemyPlayer = p1;
-//        }
-        activePlayer = p1;
-        enemyPlayer = p2;
+        if (r.nextInt(2) == 0) {
+            activePlayer = p1;
+            enemyPlayer = p2;
+        } else {
+            activePlayer = p2;
+            enemyPlayer = p1;
+        }
+        Interface.HighlightsPlayer(activePlayer);
     }
 
     @Override
@@ -46,40 +43,51 @@ public class Controller implements MouseListener, ActionListener {
             handButton.select();
         }
         else if (e.getSource() instanceof FieldCardButton fieldButton && fieldButton.isEnabled()) {
-            if (fieldButton.playerAssociated == activePlayer) { // Sua carta no campo
-                if (PodeColocarCartaCampo(fieldButton)) { // colocar carta campo
-                    fieldButton.Pai.addCard(activePlayer.hand.getSelectedCard());
-                    Interface.checkWinsConditions(p1,p2);
+            if(e.getButton() == MouseEvent.BUTTON3){
+                String str = "";
+                for(Effect effect : fieldButton.Pai.getCard().efeitosAtivos){
+                    str += effect.turnosRestantes + " turno(s) restante de " + effect.value + " " + effect.type.toString() + "\n";
                 }
-                else if (fieldButton.Pai.getCard() != null) { // Selecionar carta seu campo
-                    if(e.getClickCount() == 2){
-                        try {
-                            if(playerUsedPower){
-                                throw new PlayerAlreadyUsedPowerUpException();
-                            }
-                            int op = JOptionPane.showConfirmDialog(null, "Deseja ativar o poder de: " + fieldButton.Pai.getCard().nome);
-                            if(op == JOptionPane.YES_OPTION){
-                                playerUsedPower = true;
-                                fieldButton.Pai.select(TypeSelection.POWERED);
-                                fieldButton.Pai.getCard().Power();
-                                if(fieldButton.Pai.getCard() instanceof DouglasCard || fieldButton.Pai.getCard() instanceof NilceuCard) {
-                                    fieldButton.Pai.updateImage();
+                if(str.isEmpty())
+                    str = "Não há efeitos ativos nessa carta";
+
+                JOptionPane.showMessageDialog(null, str);
+            }
+            else {
+                if (fieldButton.playerAssociated == activePlayer) { // Sua carta no campo
+                    if (PodeColocarCartaCampo(fieldButton)) { // colocar carta campo
+                        fieldButton.Pai.addCard(activePlayer.hand.getSelectedCard());
+                        Interface.checkWinsConditions(p1, p2);
+                    } else if (fieldButton.Pai.getCard() != null) { // Selecionar carta seu campo
+                        if (e.getClickCount() == 2) {
+                            try {
+                                if (playerUsedPower) {
+                                    throw new PlayerAlreadyUsedPowerUpException();
                                 }
+                                int op = JOptionPane.showConfirmDialog(null, "Deseja ativar o poder de: " + fieldButton.Pai.getCard().nome);
+                                if (op == JOptionPane.YES_OPTION) {
+                                    playerUsedPower = true;
+                                    fieldButton.Pai.select(TypeSelection.POWERED);
+                                    fieldButton.Pai.getCard().Power();
+                                    if (fieldButton.Pai.getCard() instanceof DouglasCard || fieldButton.Pai.getCard() instanceof NilceuCard) {
+                                        fieldButton.Pai.updateImage();
+                                    }
+                                }
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(null, ex);
                             }
-                        }catch (Exception ex){
-                            JOptionPane.showMessageDialog(null, ex);
+                        } else {
+                            fieldButton.Pai.select(TypeSelection.NORMAL);
                         }
                     }
-                    else{
-                        fieldButton.Pai.select(TypeSelection.NORMAL);
-                    }
-                }
-            } else { // Carta oponente
-                if (PodeAtacar(fieldButton)) {
-                    boolean attacked = activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
-                    if(attacked){
-                        attacksLeft--;
-                        activePlayer.field.getFieldSelected().getCard().attacked = true;
+                } else { // Carta oponente
+                    if (PodeAtacar(fieldButton)) {
+                        boolean attacked = activePlayer.field.getFieldSelected().attack(fieldButton.Pai);
+                        if (attacked) {
+                            SoundEffects.playOST("Hit");
+                            attacksLeft--;
+                            activePlayer.field.getFieldSelected().getCard().attacked = true;
+                        }
                     }
                 }
             }
@@ -89,10 +97,9 @@ public class Controller implements MouseListener, ActionListener {
                 if (deckButton.getCardsLeft() <= 0) {
                     throw new OutOfCardsException();
                 }
-//                if (playerDrawed) {
-//                    throw new PlayerAlreadyDrawedException();
-//                }
-
+                if (playerDrawed) {
+                    throw new PlayerAlreadyDrawedException();
+                }
                 playerDrawed = true;
                 activePlayer.DrawCard();
                 deckButton.removeOneCard();
@@ -161,7 +168,7 @@ public class Controller implements MouseListener, ActionListener {
         playerDrawed = playerUsedPower = false;
         attacksLeft = 3;
 
-        Interface.HighlightsPlayer(activePlayer,p1,p2);
+        Interface.HighlightsPlayer(activePlayer);
     }
 
     public Player getActivePlayer(){

@@ -1,5 +1,6 @@
 package Models.CardModels;
 
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -11,5 +12,13 @@ public class LambretaRoxaCard extends Card{
     }
 
     public void Power(){
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("LambretaOut");
+    }
+
+    public String getDescription(){
+        return "Carta invocada pelo Hercules. Não possui poder especial";
     }
 }

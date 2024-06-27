@@ -18,7 +18,7 @@ public class Player {
     public String nome;
     public int vida;
     public ArrayList<Card> cards;
-    public HandPanel hand = new HandPanel(this,(Interface.class.getResource("/GUI/UtilImages/wood.png")));
+    public HandPanel hand = new HandPanel(this,(Interface.class.getResource("/GUI/UtilImages/blackwood.jpg")));
     public FieldPanel field = new FieldPanel(this);;
     public DeckPanel deck = new DeckPanel(this);
     

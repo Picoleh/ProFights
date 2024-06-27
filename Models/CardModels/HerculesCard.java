@@ -1,6 +1,7 @@
 package Models.CardModels;
 
 import GUI.Interface;
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -13,5 +14,14 @@ public class HerculesCard extends Card{
 
     public void Power(){
         Interface.controller.getActivePlayer().hand.addCardToHand(NomeCarta.LambretaRoxa);
+        SoundEffects.playOST("HerculesPower");
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("MaleOut");
+    }
+
+    public String getDescription(){
+        return "Hercules eh uma carta fraca, mas possui um grande poder: invocar sua lambreta roxa.";
     }
 }

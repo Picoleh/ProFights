@@ -18,6 +18,7 @@ import Logic.Controller;
 import Logic.Sountrack;
 import Models.*;
 import Models.CardModels.Card;
+import Models.EffectsModels.SoundEffects;
 
 public class Interface{
     public static JFrame frame;
@@ -157,7 +158,7 @@ public class Interface{
 
     }
 
-    public static void HighlightsPlayer(Player active, Player p1, Player p2){
+    public static void HighlightsPlayer(Player active){
         vezDe.setText("Vez de: " + active.nome);
     }
 
@@ -220,8 +221,14 @@ public class Interface{
 
     private static void showWinner(Player winner, boolean isWinByExodia){
         String exodia = "";
-        if(isWinByExodia)
+        Sountrack.stopOST();
+        if(isWinByExodia){
             exodia = "O Recogna foi montado....\nNão há como evitar a derrota...";
+            SoundEffects.playOST("vouDeixar");
+        }
+        else{
+            SoundEffects.playOST("Ganhou");
+        }
         JOptionPane.showMessageDialog(null, winner.nome + " GANHOU!!!!\n" + exodia);
         frame.dispose();
         Sountrack.stopOST();

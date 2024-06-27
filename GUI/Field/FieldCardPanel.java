@@ -80,6 +80,7 @@ public class FieldCardPanel extends JPanel {
 
     public void updateLife(){
         if(card.VIDA <= 0){
+            card.tocaAudioMorte();
             removeCard();
         }
         else{

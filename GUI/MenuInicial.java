@@ -31,7 +31,7 @@ public class MenuInicial {
             JPanel buttons = new JPanel(new GridLayout(1,7));
             JPanel btts = new JPanel(new GridLayout(3,1));
             JButton bttPlay = new JButton();
-            bttPlay.setIcon(new ImageIcon(Card.MudaTamanhoImagem(ImageIO.read(MenuInicial.class.getResource("/GUI/UtilImages/StartButton.png")), 0.06)));
+            bttPlay.setIcon(new ImageIcon(Card.MudaTamanhoImagem(ImageIO.read(MenuInicial.class.getResource("/GUI/UtilImages/StartButton.png")), 0.08)));
             bttPlay.setBorderPainted(false);
             bttPlay.setContentAreaFilled(false);
             bttPlay.setFocusPainted(false);
@@ -39,7 +39,7 @@ public class MenuInicial {
             bttPlay.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
             JButton bttHowToPlay = new JButton();
-            bttHowToPlay.setIcon(new ImageIcon(Card.MudaTamanhoImagem(ImageIO.read(MenuInicial.class.getResource("/GUI/UtilImages/HowToButton.png")), 0.06)));
+            bttHowToPlay.setIcon(new ImageIcon(Card.MudaTamanhoImagem(ImageIO.read(MenuInicial.class.getResource("/GUI/UtilImages/HowToButton.png")), 0.08)));
             bttHowToPlay.setBorderPainted(false);
             bttHowToPlay.setContentAreaFilled(false);
             bttHowToPlay.setFocusPainted(false);
@@ -47,7 +47,7 @@ public class MenuInicial {
             bttHowToPlay.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
             JButton bttExit = new JButton();
-            bttExit.setIcon(new ImageIcon(Card.MudaTamanhoImagem(ImageIO.read(MenuInicial.class.getResource("/GUI/UtilImages/ExitButton.png")), 0.06)));
+            bttExit.setIcon(new ImageIcon(Card.MudaTamanhoImagem(ImageIO.read(MenuInicial.class.getResource("/GUI/UtilImages/ExitButton.png")), 0.08)));
             bttExit.setBorderPainted(false);
             bttExit.setContentAreaFilled(false);
             bttExit.setFocusPainted(false);
@@ -78,6 +78,15 @@ public class MenuInicial {
                 }
             });
 
+            bttHowToPlay.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent ev){
+                    frame.setVisible(false);
+                    HowToPlay htp = new HowToPlay();
+                    frame.setVisible(false);
+                    htp.CriaTela();
+                }
+            });
+
             buttons.add(new JLabel());
             buttons.add(new JLabel());
             buttons.add(new JLabel());
@@ -103,5 +112,6 @@ public class MenuInicial {
 
     public static void MostraMenu(){
         frame.setVisible(true);
+        Sountrack.playOST("Menu");
     }
 }

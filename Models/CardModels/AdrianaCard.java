@@ -1,6 +1,7 @@
 package Models.CardModels;
 
 import GUI.Interface;
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -13,5 +14,14 @@ public class AdrianaCard extends Card{
 
     public void Power(){
         Interface.controller.getActivePlayer().hand.addCardToHand(NomeCarta.Cachorro);
+        SoundEffects.playOST("AdrianaDog");
+    }
+
+    public String getDescription(){
+        return "Adriana eh uma carta fraca, mas possui um grande poder: invocar seus cachorros que sabem calculo integral.";
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("FemaleOut");
     }
 }

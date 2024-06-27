@@ -5,6 +5,7 @@ import Models.EffectsModels.Effect;
 import Models.EffectsModels.EffectsType;
 import GUI.Field.FieldCardButton;
 import GUI.Field.FieldCardPanel;
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -30,6 +31,7 @@ public class FabianoCard extends Card{
                 public void mouseClicked(MouseEvent e) {
                     if(e.getSource() instanceof FieldCardButton fieldButton){
                         fieldButton.Pai.card.efeitosAtivos.add(new Effect(1, EffectsType.Enable,0));
+                        SoundEffects.playOST("FabianoPower");
                         f.dispose();
                     }
                 }
@@ -41,5 +43,13 @@ public class FabianoCard extends Card{
         f.pack();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("MaleOut");
+    }
+
+    public String getDescription(){
+        return "Fabiano possui um grande poder, ele coloca os inimigo para dormir, os fazendo incapazes de realizar qualquer acao.";
     }
 }

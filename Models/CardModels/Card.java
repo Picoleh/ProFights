@@ -46,6 +46,10 @@ public abstract class Card {
 
     public abstract void Power();
 
+    public abstract String getDescription();
+
+    public abstract void tocaAudioMorte();
+
     public int getDEF(){
         int soma = 0;
         for(Effect ef : efeitosAtivos){

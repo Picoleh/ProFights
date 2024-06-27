@@ -1,6 +1,7 @@
 package Models.CardModels;
 
 import GUI.Interface;
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -17,5 +18,14 @@ public class KraytonCard extends Card{
         Interface.controller.getActivePlayer().field.getFieldSelected().removeCard();
         Interface.controller.attacksLeft++;
         this.VIDA += 50;
+        SoundEffects.playOST("CardFlip");
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("MaleOut");
+    }
+
+    public String getDescription(){
+        return "Krayton eh uma carta diferente, ao contrario das outras, ele pode retornar a mao do jogador. Ao fazer isso, ele recupera vida e possibilita mais um ataque de suas cartas";
     }
 }

@@ -12,7 +12,7 @@ public class DeckCardButton extends JButton {
     public Player playerAssociated;
     public DeckCardButton(Player player){
         playerAssociated = player;
-        qtd = 20;
+        qtd = 40;
         setBackCardImg();
         updateQtd();
         this.setHorizontalTextPosition(JButton.CENTER);

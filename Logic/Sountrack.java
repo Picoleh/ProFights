@@ -17,14 +17,15 @@ public class Sountrack {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(Sountrack.class.getResourceAsStream("/Logic/Sounds/ProFights"+ostName+".wav"));
 
             ost = AudioSystem.getClip();
-            //ost.open(audioIn);
-            //ost.loop(Clip.LOOP_CONTINUOUSLY);
-            //ost.start();
+            ost.open(audioIn);
+            FloatControl gain = (FloatControl)ost.getControl(FloatControl.Type.MASTER_GAIN);
+            gain.setValue(-8.0f);
+            ost.loop(Clip.LOOP_CONTINUOUSLY);
+            ost.start();
         } catch (Exception ostException) {
             System.out.println(ostException);
         }
     }
-
     public static void stopOST(){
         if(ost!=null && ost.isRunning()){
             ost.stop();

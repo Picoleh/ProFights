@@ -1,5 +1,6 @@
 package Models.CardModels;
 
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -27,6 +28,15 @@ public class DouglasCard extends Card{
             pathToImage = "/GUI/Cards/Douglas.jpeg";
         }
         updateImage();
+        SoundEffects.playOST("DouglasPower");
+    }
+
+    public String getDescription(){
+        return "Douglas possui dois modos: ATK, o qual ele da bastante dano, mas possui pouca defesa; e DEF, o qual ele nao ataca, mas pode tankar quase todos os golpes.";
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("MaleOut");
     }
 
     private void updateImage(){

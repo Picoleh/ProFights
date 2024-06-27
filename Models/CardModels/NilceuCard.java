@@ -2,6 +2,7 @@ package Models.CardModels;
 
 import Models.EffectsModels.Effect;
 import Models.EffectsModels.EffectsType;
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -21,6 +22,15 @@ public class NilceuCard extends Card{
         }catch(Exception ex){
             System.out.println(ex);
         }
+        SoundEffects.playOST("NilceuBuff");
+    }
+
+    public String getDescription(){
+        return "Nilceu parece uma carta fraca, de inicio. Porem, ao usar seu poder, ele fica extremamente poderoso. Seu ataque e sua defesa o tornam imbativel.";
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("MaleOut");
     }
 
     public void endPower(){

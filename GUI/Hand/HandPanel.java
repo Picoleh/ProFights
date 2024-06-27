@@ -16,6 +16,7 @@ import GUI.CustomJPanel;
 import GUI.Interface;
 import Models.*;
 import Models.CardModels.*;
+import Models.EffectsModels.SoundEffects;
 
 
 public class HandPanel extends CustomJPanel {
@@ -97,6 +98,7 @@ public class HandPanel extends CustomJPanel {
         };
         playerAssociated.cards.add(c);
         update();
+        SoundEffects.playOST("CardFlip");
     }
 
     public void addCardToHand(NomeCarta nome){
@@ -125,6 +127,7 @@ public class HandPanel extends CustomJPanel {
 
         playerAssociated.cards.add(c);
         update();
+        SoundEffects.playOST("CardFlip");
     }
 
     public ArrayList<HandCardButton> getListHand(){

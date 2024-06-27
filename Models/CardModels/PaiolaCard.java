@@ -3,6 +3,7 @@ package Models.CardModels;
 import GUI.Interface;
 import GUI.Field.FieldCardButton;
 import GUI.Field.FieldCardPanel;
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -27,6 +28,7 @@ public class PaiolaCard extends Card{
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if(e.getSource() instanceof FieldCardButton fieldButton){
+                        SoundEffects.playOST("PowerSound");
                         panel.card.VIDA += 40;
                         aux.card.VIDA += 40;
                         panel.updateLife();
@@ -45,5 +47,13 @@ public class PaiolaCard extends Card{
         f.setLocationRelativeTo(null);
         f.setVisible(true);
 
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("MaleOut");
+    }
+
+    public String getDescription(){
+        return "Paiola eh uma das cartas mais importantes do jogo. Seu poder eh unico, podendo curar outras cartas. Pode ser usado estrategicamente em diversas situacoes.";
     }
 }

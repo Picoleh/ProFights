@@ -1,5 +1,6 @@
 package Models.CardModels;
 
+import Models.EffectsModels.SoundEffects;
 import Models.Location;
 import Models.NomeCarta;
 
@@ -11,5 +12,13 @@ public class CachorroCard extends Card{
     }
 
     public void Power(){
+    }
+
+    public String getDescription(){
+        return "Carta invocada pela Adriana. Não possui poder especial";
+    }
+
+    public void tocaAudioMorte(){
+        SoundEffects.playOST("DogOut");
     }
 }
